@@ -1,0 +1,27 @@
+[
+  {
+    "id": "8c887dea-b7e3-4079-908e-b0de4d182154",
+    "title": "Practice task",
+    "description": "testing setup",
+    "priority": "2",
+    "status": "todo",
+    "createdAt": "2026-03-24T16:58:54.759Z",
+    "updatedAt": "2026-03-24T16:58:54.759Z",
+    "dueDate": null,
+    "completedAt": null,
+    "tags": [
+      "learning"
+    ]
+  },
+  {
+    "id": "c80e4859-99fd-412e-8ece-c7374754d7c6",
+    "title": "Old task",
+    "description": "past due",
+    "priority": "1",
+    "createdAt": "2026-03-24T17:51:50.313Z",
+    "updatedAt": "2026-03-24T17:52:26.551Z",
+    "dueDate": "2026-03-01T00:00:00.000Z",
+    "completedAt": null,
+    "tags": []
+  }
+]
