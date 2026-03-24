@@ -327,17 +327,3 @@ Write your answers to the questions and the results of the exercise below.
    - Keep discoveries.md as living notes.
    - I used the required 1-2 pages format in a short final summary.
 
----
-
-## 📌 Final remarks
-
-- This exercise is complete and ready for submission.
-- Working set:
-  - storage.js ✅
-  - app.js ✅
-  - cli.js ✅
-  - discoveries.md ✅
-- Optional next advance:
-  - Add Jest tests for `sweepAbandoned` and `exportCSV`.
-- If needed, I can draft a separate 1:1 PR summary message for instructors.
-
