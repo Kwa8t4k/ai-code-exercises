@@ -231,3 +231,113 @@ Write your answers to the questions and the results of the exercise below.
 2. Add a feature to import CSV tasks.
 3. Refactor `TaskStorage.load()` and `save()` for a database backend (SQLite or Mongo) in a larger app.
 
+## ✅ Submission Document: Task Manager Codebase Exercise
+
+### 1. Initial vs Final Understanding
+
+- **Initial understanding**
+  - Thought this was a Next.js TypeScript app, maybe web UI.
+  - Found 4 files in root: app.js, cli.js, models.js, storage.js.
+  - Believed task logic: "delete overdue tasks unless priority".
+  - Unsure about entry point and how features connect.
+
+- **Final understanding**
+  - This is a Node.js CLI app (not a website).
+  - models.js defines `Task`, `TaskPriority`, `TaskStatus`.
+  - storage.js handles persistence (`tasks.json`), plus CRUD APIs.
+  - app.js provides business logic (`TaskManager`) and calls storage.
+  - cli.js provides commands using `commander` (create, list, status, etc.).
+  - New features implemented:
+    - CSV export (`export-csv` through `TaskStorage.exportCSV`).
+    - delayed abandonment rule (`sweep-abandoned` through `TaskManager.sweepAbandoned`).
+  - Checked command execution and file output manually.
+
+---
+
+### 2. Valuable insights from each prompt
+
+#### Prompt 1: Understanding Project Structure and Technology Stack
+- Validated assumptions about modules and roles.
+- Identified missing dependencies (`uuid`, `commander`).
+- Confirmed runtime entry point is CLI.
+
+#### Prompt 2: Finding Feature Implementation Locations
+- Identified relevant layers:
+  - persistence = storage.js
+  - business logic = app.js
+  - interface = cli.js
+- Defined implementation plan for new features.
+- Discovered the existing domain model already supports business rule.
+
+#### Prompt 3: Understanding Domain Models and Business Concepts
+- Task "overdue" depends on `dueDate` and `status !== DONE`.
+- High priority is business-exempt value.
+- `ABANDONED` is introduced as terminal status.
+- Domain model is simple and easy to extend (e.g., recurring tasks, status transitions).
+
+---
+
+### 3. Approach to implementing the new business rule
+
+- **Rule:** "Tasks overdue > 7 days become ABANDONED unless HIGH priority."
+- Added/updated:
+  - `TaskStatus.ABANDONED` in models.js.
+  - `TaskManager.sweepAbandoned(days)` in app.js.
+  - `TaskStorage.exportCSV(filePath)` in storage.js.
+  - `TaskManager.exportTasksCsv(filePath)` in app.js.
+  - CLI commands in cli.js:
+    - `export-csv <file>`
+    - `sweep-abandoned --days <n>`
+- Process:
+  1. Analyze existing task flow and methods.
+  2. Add helper in storage for CSV.
+  3. Add manager operations as wrappers.
+  4. Tie to CLI actions.
+  5. Test manually and inspect outputs.
+- Verified by:
+  - creating sample tasks,
+  - exporting CSV,
+  - sweeping overdue tasks,
+  - checking `tasks.json`/output.
+
+---
+
+### 4. Strategies developed for approaching unfamiliar code
+
+1. **High-level scan first**
+   - Directory tree + README + package.json (if exists).
+   - Locate main language and dependencies.
+
+2. **Identify execution flow**
+   - Find entry point (cli.js in this case).
+   - Trace through invocation path (`cli -> TaskManager -> TaskStorage`).
+
+3. **Extract domain model**
+   - Find data classes (`Task` etc.)
+   - List attributes, states, behaviors.
+
+4. **Search in place**
+   - Search for key terms (`overdue`, `getAllTasks`, `isOverdue`, `writeFileSync`).
+
+5. **Hypothesis and verify**
+   - Write a small plan for where the feature should be.
+   - Implement incrementally and test each step.
+
+6. **Document everything**
+   - Keep discoveries.md as living notes.
+   - I used the required 1-2 pages format in a short final summary.
+
+---
+
+## 📌 Final remarks
+
+- This exercise is complete and ready for submission.
+- Working set:
+  - storage.js ✅
+  - app.js ✅
+  - cli.js ✅
+  - discoveries.md ✅
+- Optional next advance:
+  - Add Jest tests for `sweepAbandoned` and `exportCSV`.
+- If needed, I can draft a separate 1:1 PR summary message for instructors.
+
